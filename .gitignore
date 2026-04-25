@@ -9,3 +9,10 @@ build
 
 # Binary files
 app/bin/
+
+# ingonarable 
+app/.classpath
+app/.project
+app/.settings/
+app/.factorypath
+.factorypath
