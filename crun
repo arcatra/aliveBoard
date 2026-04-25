@@ -1,0 +1,70 @@
+#!/bin/bash 
+
+
+# NOTE: Use this bash script with caution, as this method doesn't track and manage dependencies and changes.
+
+# This bash script is written by me(arcatra) and is intended for basic java projects only.
+# As my project grew, i quickly realised that this approch is not sufficient, so switched to gradle.
+
+# How to run this file:
+#   NOTE: update the folder structure for "root" and "bin" as needed.
+#   Navigate to the parent dir of this script, and make it executable: chmod +x ./crun
+#   run it: ./crun <any args>
+#   NOTE: This is a one time setup, and you can pass args if needed "crun" will pass them directly to java.
+
+
+printf "1. compile,\n2. run,\n3. exit\n(default: 2)\n[1/2/3]\nChoice? : "
+read -r choice
+
+root="./app/src/main/java/"
+bin="./app/bin/main/"
+# lib="./app/lib/*"
+MAIN_CLASS="aliveBoard.GameEntry"
+
+compile () { 
+    echo "Compiling sources.."
+    find "$root" -name "*.java" -print0 | xargs -0 javac -d "$bin" || exit 1
+    printf "Done\n"
+}
+
+run() {
+    echo
+    if [[ ! -d "$bin" ]]; then
+        echo "Error: No binary DIR found, compiling the project first"
+        compile
+
+    fi
+    # java -cp "./app/bin/main:./app/lib/*" noter.Noter "$@" || exit 1
+    echo "Lanching $MAIN_CLASS.." 
+
+    java -classpath "${bin}" "$MAIN_CLASS" "$@" || exit 1
+    echo
+}
+
+case "$choice" in
+    12)
+        compile
+        run "$@"
+    ;;
+    21)
+        run "$@"
+        compile
+    ;;
+    1) 
+        compile
+    ;;
+    2 | "") 
+        run "$@"
+    ;;
+    3) 
+        echo "Halting the process"
+        echo 
+
+        exit
+    ;;
+    *)
+    echo "Invalid input"
+    ;;
+
+esac
+
