@@ -1,25 +1,32 @@
-#!/bin/bash 
+#!/usr/bin/env bash 
 
-
-# NOTE: Use this bash script with caution, as this method doesn't track and manage dependencies and changes.
+# NOTE - IMP:
+# 1. This Bash-Script is intended only for LINUX, and macOS users.
+# 2. This method doesn't track and manage dependencies and changes.
+# 3. You have to compile the project everytime you save the changes.
+# 4. Update the folder structure for "root", "bin", and MAIN_CLASS VARS as needed.
+# 5. This script should always live at the root of your project.
 
 # This bash script is written by me(arcatra) and is intended for basic java projects only.
-# As my project grew, i quickly realised that this approch is not sufficient, so switched to gradle.
+# And you're free to use, add, and modify this script as you needed.
 
 # How to run this file:
-#   NOTE: update the folder structure for "root" and "bin" as needed.
-#   Navigate to the parent dir of this script, and make it executable: chmod +x ./crun
-#   run it: ./crun <any args>
-#   NOTE: This is a one time setup, and you can pass args if needed "crun" will pass them directly to java.
+#   1. Make it executable: chmod +x <path>/crun 
+#   2. run it: <path>/crun <any args> ; (./crun if it is in PWD)
+#   NOTE: This is a one time setup, and you can pass args if needed, "crun" will pass them directly to Java.
 
-
-printf "1. compile,\n2. run,\n3. exit\n(default: 2)\n[1/2/3]\nChoice? : "
+echo
+printf "1. compile,\n2. run,\n3. exit\nUse 12(compile, run), 21(run, compile) for flexibility\n(default: 2)\n[1/2/3]\nChoice? : "
 read -r choice
 
-root="./app/src/main/java/"
-bin="./app/bin/main/"
+root="./app/src/main/java/" # Usually the parent DIR of your main pacakge.
+bin="./app/bin/main/" 
 # lib="./app/lib/*"
 MAIN_CLASS="aliveBoard.GameEntry"
+
+# If you add "$root" and "$MAIN_CLASS" -> ./app/src/main/java/aliveBoard/GameEntry
+# It should make up the actual file path of your main class, in my case it's "GameEntry".
+# That's how you'll know that your paths are correct.
 
 compile () { 
     echo "Compiling sources.."
@@ -57,8 +64,7 @@ case "$choice" in
         run "$@"
     ;;
     3) 
-        echo "Halting the process"
-        echo 
+        echo "Proccess stopped"
 
         exit
     ;;

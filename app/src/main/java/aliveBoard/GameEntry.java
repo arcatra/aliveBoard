@@ -221,8 +221,8 @@ public class GameEntry {
 
         System.out.println(GameEntry.RESET);
         System.out.println(
-                "additional args: cannot find any(java -cp ... <rows columns>) or may be Invalid");
-        System.out.println("rows = columns & rows, columns <= 8\n");
+                "additional args: cannot find any(java -cp ... <rows> <columns>) or may be Invalid");
+        System.out.println("FOLLOW: rows = columns ; rows, columns <= 8\n");
         System.out.println("\nDefaulting the board size to 4 x 4.\n\n");
 
         return false;
@@ -245,6 +245,7 @@ public class GameEntry {
         Scanner userIn = new Scanner(System.in);
         GameEntry gameObj = new GameEntry(argRows, argColumns);
 
+        System.out.println("ctr+c: To exit from the process anytime");
         gameObj.board.buildBoard();
         gameObj.board.displayBoard();
 
