@@ -2,17 +2,16 @@
 
 # NOTE - IMP:
 # 1. This Bash-Script is intended only for LINUX, and macOS users.
-# 2. This method doesn't track and manage dependencies and changes.
-# 3. You have to compile the project everytime you save the changes.
-# 4. Update the folder structure for "root", "bin", and MAIN_CLASS VARS as needed.
-# 5. This script should always live at the root of your project.
+# 2. This script should always live at the root of your project.
+# 3. Update the folder structure for "root", "bin", and MAIN_CLASS VARS as needed.
+# 4. This script can compile and run your project only if you run it.
 
 # This bash script is written by me(arcatra) and is intended for basic java projects only.
-# And you're free to use, add, and modify this script as you needed.
+# And you're free to use, add, and modify this script.
 
 # How to run this file:
-#   1. Make it executable: chmod +x <path>/crun 
-#   2. run it: <path>/crun <any args> ; (./crun if it is in PWD)
+#   1. Make it executable: chmod +x <path/to/crun> (./crun if it is in PWD)
+#   2. run it: ./<path/to/crun> <any args> (./crun if it is in PWD)
 #   NOTE: This is a one time setup, and you can pass args if needed, "crun" will pass them directly to Java.
 
 echo
@@ -20,13 +19,15 @@ printf "1. compile,\n2. run,\n3. exit\nUse 12(compile, run), 21(run, compile) fo
 read -r choice
 
 root="./app/src/main/java/" # Usually the parent DIR of your main pacakge.
-bin="./app/bin/main/" 
+bin="./app/bin/main/"       # Stores all of the binary(.class) files
 # lib="./app/lib/*"
 MAIN_CLASS="aliveBoard.GameEntry"
 
-# If you add "$root" and "$MAIN_CLASS" -> ./app/src/main/java/aliveBoard/GameEntry
-# It should make up the actual file path of your main class, in my case it's "GameEntry".
+# If you add "$root" and "$MAIN_CLASS" -> ./app/src/main/java/aliveBoard/GameEntry,
+# It should reflect the actual file path of your main class, in my case it's "GameEntry".
 # That's how you'll know that your paths are correct.
+# It is recommended that "$bin" path is always outside of your "src",
+# this would keep you .class files and .java sources seperate.
 
 compile () { 
     echo "Compiling sources.."
@@ -49,24 +50,24 @@ run() {
 }
 
 case "$choice" in
-    12)
+    12)          # compile and run
         compile
         run "$@"
     ;;
-    21)
+    21)          # run and compile
         run "$@"
         compile
     ;;
     1) 
         compile
     ;;
-    2 | "") 
+    2 | "")      # You can change the default option by removing (| "") and adding the same to you're desidered default option.
         run "$@"
     ;;
     3) 
-        echo "Proccess stopped"
+        echo "Proccess Exit"
 
-        exit
+        exit 0
     ;;
     *)
     echo "Invalid input"
